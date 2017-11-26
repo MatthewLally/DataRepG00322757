@@ -1,39 +1,18 @@
-doctype html
-html(lang='en')
-  head
-    title= title
-    meta(charset='utf-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    div(class='container-fluid')
-      div(class='row')
-        div(class='col-sm-2')
-          block sidebar
-            ul(class='sidebar-nav')
-              li 
-                a(href='/main') Home
-              li 
-                a(href='/main/movies') All Movies
-              li 
-                a(href='/main/stars') All Movie Stars
-              li 
-                a(href='/main/genres') All Genres
-              li 
-                a(href='/main/directors') All Directors
-              li 
-                hr
-              li 
-                a(href='/main/movie/create') Create new movie
-              li 
-                a(href='/main/genre/create') Create new genre
-              li 
-                a(href='/main/star/create') Create new movie stars
-              li 
-                a(href='/main/director/create') Create new director
-                
-        div(class='col-sm-10')
-          block content
+extends layout
+
+block content
+  h1= title
+  p Welcome to #[em MoviesDatabbase], an Express website developed as a part of a fourth year project.
+
+  h1 Dynamic content
+
+  if error
+    p Error getting dynamic content.
+  else
+    p The database has the following record counts:
+
+    ul
+      li #[strong Movies:] !{data.movie_count}
+      li #[strong Directors:] !{data.directors_count} 
+      li #[strong Stars:] !{data.stars_count}
+      li #[strong Genres:] !{data.genre_count}

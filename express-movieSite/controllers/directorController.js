@@ -1,10 +1,18 @@
 var Director = require('../models/director');
 
 // Display list of all Directors
-exports.director_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: Director list');
-};
-
+// Display list of all Books
+exports.director_list = function(req, res, next) {
+    
+      Director.find({}, 'first_name movies_directed')
+        .populate('first_name')
+        .exec(function (err, list_director) {
+          if (err) { return next(err); }
+          //Successful, so render
+          res.render('director_list', { title: 'Director List', director_list: list_director });
+        });
+        
+    };
 // Display detail page for a specific Director
 exports.director_detail = function(req, res) {
     res.send('NOT IMPLEMENTED: Director detail: ' + req.params.id);
