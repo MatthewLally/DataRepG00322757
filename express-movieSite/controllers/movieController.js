@@ -1,7 +1,28 @@
 var Movie = require('../models/movie');
+var Director = require('../models/director');
+var Genre = require('../models/genre');
+var Stars = require('../models/stars');
 
-exports.index = function(req, res) {
-    res.send('NOT IMPLEMENTED: Site Home Page');
+var async = require('async');
+
+exports.index = function(req, res) {   
+    
+    async.parallel({
+        movie_count: function(callback) {
+            Movie.count(callback);
+        },
+        Director_count: function(callback) {
+            Director.count(callback);
+        },
+        stars_count: function(callback) {
+            Stars.count(callback);
+        },
+        genre_count: function(callback) {
+            Genre.count(callback);
+        },
+    }, function(err, results) {
+        res.render('index', { title: 'Movies Database Home', error: err, data: results });
+    });
 };
 
 // Display list of all movies
