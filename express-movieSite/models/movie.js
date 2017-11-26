@@ -19,7 +19,7 @@ var MovieSchema = new Schema(
 MovieSchema
 .virtual('url')
 .get(function () {
-  return '/catalog/movie/' + this._id;
+  return '/main/movie/' + this._id;
 });
 
 //Export model

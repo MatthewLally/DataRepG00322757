@@ -24,7 +24,7 @@ DirectorSchema
 DirectorSchema
 .virtual('url')
 .get(function () {
-  return '/catalog/director/' + this._id;
+  return '/main/director/' + this._id;
 });
 
 //Export model
