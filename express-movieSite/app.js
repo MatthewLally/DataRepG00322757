@@ -8,12 +8,12 @@ var mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var main = require('./routes/catalog');  //Import routes for "main" area of site
+var main = require('./routes/main');  //Import routes for "main" area of site
 
 var app = express();
 
 //Set up mongoose connection
-var mongoDB = 'mongodb://<your_user_name>:<yourpassword>@ds121716.mlab.com:21716/movie_database';
+var mongoDB = 'mongodb://matthew:matthew@ds121716.mlab.com:21716/movie_database';
 mongoose.connect(mongoDB, {
   useMongoClient: true
 });

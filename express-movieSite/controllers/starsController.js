@@ -1,4 +1,4 @@
-var Stars = require('../models/star');
+var Stars = require('../models/stars');
 
 // Display list of all Genre
 exports.stars_list = function(req, res) {
