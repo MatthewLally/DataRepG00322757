@@ -1,10 +1,17 @@
 var Stars = require('../models/stars');
 
 // Display list of all Genre
-exports.stars_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: Stars list');
-};
-
+exports.stars_list = function(req, res, next) {
+    
+      Stars.find({}, 'first_name movies_starred')
+        .populate('first_name')
+        .exec(function (err, list_stars) {
+          if (err) { return next(err); }
+          //Successful, so render
+          res.render('stars_list', { title: 'Stars List', stars_list: list_stars });
+        });
+        
+    };
 // Display detail page for a specific star
 exports.stars_detail = function(req, res) {
     res.send('NOT IMPLEMENTED: Stars detail: ' + req.params.id);

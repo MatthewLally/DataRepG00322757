@@ -25,10 +25,18 @@ exports.index = function(req, res) {
     });
 };
 
-// Display list of all movies
-exports.movie_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: Movie list');
-};
+// Display list of all Books
+exports.movie_list = function(req, res, next) {
+    
+      Movie.find({}, 'title director')
+        .populate('director')
+        .exec(function (err, list_movies) {
+          if (err) { return next(err); }
+          //Successful, so render
+          res.render('movie_list', { title: 'Movie List', movie_list: list_movies });
+        });
+        
+    };
 
 // Display detail page for a specific movie
 exports.movie_detail = function(req, res) {
