@@ -26,8 +26,8 @@ exports.genre_detail = function(req, res, next) {
               .exec(callback);
         },
 
-        genre_books: function(callback) {
-          Book.find({ 'genre': req.params.id })
+        genre_movie: function(callback) {
+          Movie.find({ 'genre': req.params.id })
           .exec(callback);
         },
 
@@ -35,7 +35,7 @@ exports.genre_detail = function(req, res, next) {
         if (err) { return next(err); }
         //Successful, so render
 
-        res.render('genre_detail', { title: 'Genre Detail', genre: results.genre, genre_books: results.genre_books } );
+        res.render('genre_detail', { title: 'Genre Detail', genre: results.genre, genre_movie: results.genre_movie } );
     });
 
 };
