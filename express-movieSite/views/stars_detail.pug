@@ -1,0 +1,19 @@
+extends layout
+
+block content
+
+  h1 Star: #{stars.name}
+  p #{stars.date_of_birth} - #{stars.date_of_death}
+  
+  div(style='margin-left:20px;margin-top:20px')
+
+    h4 Movies
+    
+    dl
+    each movie in stars_movie
+      dt 
+        a(href=movie.url) #{movie.title}
+      dd #{movie.description}
+
+    else
+      p This actor has not starred in any movies.

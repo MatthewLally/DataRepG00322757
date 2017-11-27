@@ -1,0 +1,19 @@
+extends layout
+
+block content
+
+  h1 Director: #{director.name}
+  p #{director.date_of_birth} - #{director.date_of_death}
+  
+  div(style='margin-left:20px;margin-top:20px')
+
+    h4 Movies
+    
+    dl
+    each movie in director_movie
+      dt 
+        a(href=movie.url) #{movie.title}
+      dd #{movie.description}
+
+    else
+      p This director has not directed any movies.

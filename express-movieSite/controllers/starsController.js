@@ -1,5 +1,6 @@
 var Stars = require('../models/stars');
-
+var async = require('async');
+var Movie = require('../models/movie');
 // Display list of all Genre
 exports.stars_list = function(req, res, next) {
     
@@ -13,10 +14,24 @@ exports.stars_list = function(req, res, next) {
         
     };
 // Display detail page for a specific star
-exports.stars_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Stars detail: ' + req.params.id);
-};
-
+exports.stars_detail = function(req, res, next) {
+    
+      async.parallel({
+        stars: function(callback) {     
+          Stars.findById(req.params.id)
+            .exec(callback);
+        },
+        stars_movie: function(callback) {
+          Movie.find({ 'stars': req.params.id },'title description')
+            .exec(callback);
+        },
+      }, function(err, results) {
+        if (err) { return next(err); }
+        //Successful, so render
+        res.render('stars_detail', { title: 'Stars Detail', stars: results.stars, movie_stars: results.stars_movie });
+      });
+        
+    };
 // Display Stars create form on GET
 exports.stars_create_get = function(req, res) {
     res.send('NOT IMPLEMENTED: Stars create GET');
