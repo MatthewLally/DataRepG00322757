@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 #{title}: #{movie.title}
+  
+  p #[strong Movie:] 
+    a(href=movie.director.url) #{movie.director.name}
+  p #[strong Description:] #{movie.description}
+  p #[strong Release Date:] #{movie.release_date}
+  p #[strong Stars:]#{movie.stars}
+  p #[strong Genre:]&nbsp;
+    each val in movie.genre
+      a(href=val.url) #{val.name}
+      |, 
+ 
+    else
+      p There are no movies.

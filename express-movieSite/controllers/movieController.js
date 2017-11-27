@@ -39,9 +39,29 @@ exports.movie_list = function(req, res, next) {
     };
 
 // Display detail page for a specific movie
-exports.movie_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Movie detail: ' + req.params.id);
-};
+// Display detail page for a specific book
+exports.movie_detail = function(req, res, next) {
+    
+      async.parallel({
+        movie: function(callback) {     
+            
+          Movie.findById(req.params.id)
+            .populate('director')
+            .populate('genre')
+            .exec(callback);
+        },
+        movie_instance: function(callback) {
+    
+          MovieInstance.find({ 'movie': req.params.id })
+            //.populate('book')
+            .exec(callback);
+        },
+      }, function(err, results) {
+        if (err) { return next(err); }
+        //Successful, so render
+        res.render('movie_detail', { title: 'Title', movie: results.movie, movie_instances: results.movie_instance });
+      });
+        
 
 // Display movie create form on GET
 exports.movie_create_get = function(req, res) {
