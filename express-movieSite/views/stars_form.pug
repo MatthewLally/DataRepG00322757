@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1=title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='first_name') First Name:
+      input#first_name.form-control(type='text', placeholder='First name (Johnny) last' name='first_name' required='true' value=(undefined===stars ? '' : stars.first_name) )
+      label(for='second_name') Second Name:
+      input#second_name.form-control(type='text', placeholder='Second name (Depp)' name='second_name' required='true' value=(undefined===stars ? '' : stars.second_name))
+    div.form-group
+      label(for='date_of_birth') Date of birth:
+      input#date_of_birth.form-control(type='date', name='date_of_birth' value=(undefined===stars ? '' : stars.date_of_birth_yyyy_mm_dd) )
+    div.form-group
+      label(for='date_of_death') Date of death:
+      input#date_of_death.form-control(type='date', name='date_of_death' value=(undefined===stars ? '' : stars.date_of_death_yyyy_mm_dd) )
+    div.form-group
+      label(for='nationality') Nationality:
+      input#nationality.form-control(type='text', placeholder='Nationality (Irish) ' name='nationality' required='true' value=(undefined===stars ? '' : stars.nationality) )
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

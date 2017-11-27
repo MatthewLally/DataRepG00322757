@@ -4,10 +4,9 @@ block content
   h1= title
   
   ul
-  each stars in stars_list
+  each val in list_stars
     li 
-      a(href=stars.url) #{stars.first_name} 
-      |  (#{stars.movies_starred})
+      a(href=val.url) #{val.name}
 
   else
-    li There are no stars
+    li There are no movie stars.
