@@ -2,18 +2,24 @@ extends layout
 
 block content
 
-  h1 Star: #{stars.name}
-  p #{stars.date_of_birth} - #{stars.date_of_death}
+  h1 Star: #{star.name}
+  p #{star.lifespan}
   
   div(style='margin-left:20px;margin-top:20px')
 
     h4 Movies
     
     dl
-    each movie in stars_movie
+    each movie in star_movies
       dt 
         a(href=movie.url) #{movie.title}
       dd #{movie.description}
 
     else
-      p This actor has not starred in any movies.
+      p This star has no movies.
+      
+  hr
+  p
+    a(href=star.url+'/delete') Delete star
+  p
+    a(href=star.url+'/update') Update star

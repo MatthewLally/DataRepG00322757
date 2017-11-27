@@ -5,11 +5,11 @@ var Schema = mongoose.Schema;
 var MovieSchema = new Schema(
   {
     title: {type: String, required: true, max: 100},
-    director: {type: Schema.ObjectId, ref: 'Director', required: true},
+    director: {type: Schema.ObjectId, ref: 'Director'},
     description: {type: String, required: true, max: 100},
     release_date: {type: Date, required: true},
-    stars : {type: Schema.ObjectId, ref: 'Stars', required: true},
-    genre : { type: Schema.ObjectId, ref: 'Genre', required: true},
+    stars : {type: Schema.ObjectId, ref: 'Stars'},
+    genre : { type: Schema.ObjectId, ref: 'Genre'},
   }
 );
 

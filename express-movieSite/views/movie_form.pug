@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='title') Title:
+      input#title.form-control(type='text', placeholder='Name of movie' name='title' required='true' value=(undefined===movie ? '' : movie.title) )
+    div.form-group
+      label(for='director') Director:
+      select#director.form-control(type='select', placeholder='Select director' name='director' )
+        for director in directors
+          if movie
+            option(value=director._id selected=(director._id.toString()==movie.director ? 'selected' : false) ) #{director.name}
+          else
+            option(value=director._id) #{director.name}
+    div.form-group
+      label(for='description') Description:
+      input#description.form-control(type='textarea', placeholder='Description' name='description' value=(undefined===movie ? '' : movie.description) required='true')
+    div.form-group
+      label(for='release_date') Release Date:
+      input#release_date.form-control(type='date', name='release_date' value=(undefined===movie ? '' : movie.release_date_yyyy_mm_dd) )
+    //div.form-group
+      label(for='stars') Stars:
+      select#stars.form-control(type='select', placeholder='Select star' name='stars' )
+        for star in stars
+          if movie
+            option(value=stars._id selected=(stars._id.toString()==movie.stars ? 'selected' : false) ) #{stars.name}
+          else
+            option(value=stars._id) #{stars.name}
+    div.form-group
+      label Genre:
+      div
+        for genre in genres
+          div(style='display: inline; padding-right:10px;')
+            input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id, checked=genre.checked )
+            label(for=genre._id) #{genre.name}
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

@@ -6,9 +6,9 @@ block content
   form(method='POST' action='')
     div.form-group
       label(for='first_name') First Name:
-      input#first_name.form-control(type='text', placeholder='First name (Johnny) last' name='first_name' required='true' value=(undefined===stars ? '' : stars.first_name) )
+      input#first_name.form-control(type='text', placeholder='First name' name='first_name' required='true' value=(undefined===stars ? '' : stars.first_name) )
       label(for='second_name') Second Name:
-      input#second_name.form-control(type='text', placeholder='Second name (Depp)' name='second_name' required='true' value=(undefined===stars ? '' : stars.second_name))
+      input#second_name.form-control(type='text', placeholder='Second name' name='second_name' required='true' value=(undefined===stars ? '' : stars.second_name))
     div.form-group
       label(for='date_of_birth') Date of birth:
       input#date_of_birth.form-control(type='date', name='date_of_birth' value=(undefined===stars ? '' : stars.date_of_birth_yyyy_mm_dd) )

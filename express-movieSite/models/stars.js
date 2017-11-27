@@ -24,7 +24,7 @@ StarsSchema
 StarsSchema
 .virtual('url')
 .get(function () {
-  return '/main/star/' + this._id;
+  return '/main/stars/' + this._id;
 });
 
 //Export model

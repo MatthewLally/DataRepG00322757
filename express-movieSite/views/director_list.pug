@@ -6,8 +6,8 @@ block content
   ul
   each director in director_list
     li 
-      a(href=director.url) #{director.first_name} 
-      |  (#{director.first_name.name})
+      a(href=director.url) #{director.name} 
+      | (#{director.lifespan})
 
   else
     li There are no directors
