@@ -4,9 +4,9 @@ block content
   h1= title
   
   ul
-  each val in list_genres
+  each genre in genre_list
     li 
-      a(href=val.url) #{val.name}
-
+      a(href=genre.url) #{genre.name} 
   else
-    li There are no genres.
+    li There are no stars
+    

@@ -139,7 +139,7 @@ exports.director_list = function(req, res, next) {
     
         req.sanitize('id').escape();
         req.sanitize('id').trim();
-        Stars.findById(req.params.id, function(err, director) {
+        Director.findById(req.params.id, function(err, director) {
             if (err) { return next(err); }
             //On success
             res.render('director_form', { title: 'Update director', director: director });
