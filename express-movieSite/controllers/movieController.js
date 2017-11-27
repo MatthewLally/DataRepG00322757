@@ -61,6 +61,7 @@ exports.movie_detail = function(req, res, next) {
         //Successful, so render
         res.render('movie_detail', { title: 'Title', movie: results.movie, movie_instances: results.movie_instance });
       });
+    };
         
 
 // Display movie create form on GET
