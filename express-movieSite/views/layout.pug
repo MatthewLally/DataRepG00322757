@@ -1,6 +1,8 @@
 doctype html
 html(lang='en')
   head
+    block scripts
+      link(rel='stylesheet', href='/stylesheets/style.css')
     title= title
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -12,23 +14,62 @@ html(lang='en')
     div(class='container-fluid')
       div(class='row')
 
-          nav.navbar.navbar-default
+          nav.navbar.navbar-inverse
             .container-fluid
               .navbar-header
                 a.navbar-brand(href='/main') Movies Database
               |     
               ul.nav.navbar-nav
-                li.active
-                  a(href='/main/movie') All Movies
-                |       
-                li
-                  a(href='/main/stars') All Movie Stars
-                |       
-                li
-                  a(href='/main/genre') All Genres
-                |       
-                li
-                  a(href='/main/director') All Directors
-
+                li.dropdown
+                  a.dropdown-toggle(data-toggle='dropdown', href='/main/movie')
+                    | All Movies
+                    span.caret
+                  |         
+                  ul.dropdown-menu
+                    li
+                      a(href='/main/movie/create') Create Movie
+                    |           
+                    li
+                      a(href='/main/movie/') Movies List
+                |
+                ul.nav.navbar-nav
+                li.dropdown
+                  a.dropdown-toggle(data-toggle='dropdown', href='/main/stars')
+                    | All Stars
+                    span.caret
+                  |         
+                  ul.dropdown-menu
+                    li
+                      a(href='/main/stars/create') Create Stars
+                    |           
+                    li
+                      a(href='/main/stars/') Stars List
+                |
+                ul.nav.navbar-nav
+                li.dropdown
+                  a.dropdown-toggle(data-toggle='dropdown', href='/main/genre')
+                    | All Genres
+                    span.caret
+                  |         
+                  ul.dropdown-menu
+                    li
+                      a(href='/main/genre/create') Create Genre
+                    |           
+                    li
+                      a(href='/main/genre/') Genre List
+                |
+                ul.nav.navbar-nav
+                li.dropdown
+                  a.dropdown-toggle(data-toggle='dropdown', href='/main/director')
+                    | All Directors
+                    span.caret
+                  |         
+                  ul.dropdown-menu
+                    li
+                      a(href='/main/director/create') Create Director
+                    |           
+                    li
+                      a(href='/main/director/') Director List
+                |                           
           block content
 

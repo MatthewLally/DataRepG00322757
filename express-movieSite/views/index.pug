@@ -1,18 +1,9 @@
 extends layout
 
+
+
 block content
-  h1= title
-  p Welcome to #[em MoviesDatabbase], an Express website developed as a part of a fourth year project.
-
-  h1 Dynamic content
-
-  if error
-    p Error getting dynamic content.
-  else
-    p The database has the following record counts:
-
-    ul
-      li #[strong Movies:] !{data.movie_count}
-      li #[strong Directors:] !{data.directors_count} 
-      li #[strong Stars:] !{data.stars_count}
-      li #[strong Genres:] !{data.genre_count}
+  .container
+    .jumbotron
+    h1= title
+    p Welcome to #[em MoviesDatabase], an Express website developed as a part of a fourth year project. This website was created as part of my module Data Representation and Querying. To use this website simply click on any of the navigation bars at the top of the screen to add a movie, the movie stars, the movie director, and the movie genre. You can also look at a list of the movies added, movie stars added, movie genres added and directors added.
