@@ -1,0 +1,15 @@
+extends layout
+
+block content
+
+  h1 #{title}: #{movie.title}
+  
+  p #[strong Description:] #{movie.description}
+  p #[strong Release Date:] #{movie.release_date}
+  p Do you really want to delete this Book?
+    
+    form(method='POST' action='')
+      div.form-group
+        input#id.form-control(type='hidden',name='id', required='true', value=movie._id )
+
+      button.btn.btn-primary(type='submit') Delete

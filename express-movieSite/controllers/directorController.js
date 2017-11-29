@@ -188,7 +188,7 @@ exports.director_list = function(req, res, next) {
         }
         else {
             // Data from form is valid. Update the record.
-            Director.findByIdAndUpdate(req.params.id, star, {}, function (err,thedirector) {
+            Director.findByIdAndUpdate(req.params.id, director, {}, function (err,thedirector) {
                 if (err) { return next(err); }
                    //successful - redirect to genre detail page.
                    res.redirect(thedirector.url);

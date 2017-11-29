@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var moment = require('moment'); //for date handling
 
 var Schema = mongoose.Schema;
 
@@ -26,6 +27,33 @@ StarsSchema
 .get(function () {
   return '/main/stars/' + this._id;
 });
+
+StarsSchema
+.virtual('lifespan')
+.get(function () {
+  var lifetime_string='';
+  if (this.date_of_birth) {
+      lifetime_string=moment(this.date_of_birth).format('MMMM Do, YYYY');
+      }
+  lifetime_string+=' - ';
+  if (this.date_of_death) {
+      lifetime_string+=moment(this.date_of_death).format('MMMM Do, YYYY');
+      }
+  return lifetime_string
+});
+
+StarsSchema
+.virtual('date_of_birth_yyyy_mm_dd')
+.get(function () {
+  return moment(this.date_of_birth).format('YYYY-MM-DD');
+});
+
+StarsSchema
+.virtual('date_of_death_yyyy_mm_dd')
+.get(function () {
+  return moment(this.date_of_death).format('YYYY-MM-DD');
+});
+
 
 //Export model
 module.exports = mongoose.model('Stars', StarsSchema);

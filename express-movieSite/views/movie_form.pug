@@ -6,13 +6,13 @@ block content
   form(method='POST' action='')
     div.form-group
       label(for='title') Title:
-      input#title.form-control(type='text', placeholder='Name of movie' name='title' required='true' value=(undefined===movie ? '' : movie.title) )
+      input#title.form-control(type='text', placeholder='Name of Movie' name='title' required='true' value=(undefined===movie ? '' : movie.title) )
     div.form-group
       label(for='director') Director:
-      select#director.form-control(type='select', placeholder='Select director' name='director' )
+      select#director.form-control(type='select', placeholder='Select director' name='director' required='true' )
         for director in directors
           if movie
-            option(value=director._id selected=(director._id.toString()==movie.director ? 'selected' : false) ) #{director.name}
+            option(value=director._id selected=(director._id.toString()==movie.director._id.toString() ? 'selected' : false) ) #{director.name}
           else
             option(value=director._id) #{director.name}
     div.form-group
@@ -21,14 +21,14 @@ block content
     div.form-group
       label(for='release_date') Release Date:
       input#release_date.form-control(type='date', name='release_date' value=(undefined===movie ? '' : movie.release_date_yyyy_mm_dd) )
-    //div.form-group
+    div.form-group
       label(for='stars') Stars:
-      select#stars.form-control(type='select', placeholder='Select star' name='stars' )
+      select#stars.form-control(type='select', placeholder='Select Stars' name='stars' required='true' )
         for star in stars
           if movie
-            option(value=stars._id selected=(stars._id.toString()==movie.stars ? 'selected' : false) ) #{stars.name}
+            option(value=star._id selected=(star._id.toString()==movie.star._id.toString() ? 'selected' : false) ) #{star.name}
           else
-            option(value=stars._id) #{stars.name}
+            option(value=star._id) #{star.name}
     div.form-group
       label Genre:
       div

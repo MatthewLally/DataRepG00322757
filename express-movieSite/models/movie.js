@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var moment = require('moment'); //for date handling
 
 var Schema = mongoose.Schema;
 
@@ -20,6 +21,18 @@ MovieSchema
 .virtual('url')
 .get(function () {
   return '/main/movie/' + this._id;
+});
+
+
+
+MovieSchema
+.virtual('release')
+.get(function () {
+  var release_string='';
+  if (this.release_date) {
+      release_string+moment(this.release_date).format('MMMM Do, YYYY');
+      }
+  return release_string
 });
 
 //Export model

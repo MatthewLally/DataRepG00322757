@@ -68,56 +68,57 @@ exports.genre_list = function(req, res, next) {
     
     };
     
-    // Display Author delete form on GET
-    exports.genre_delete_get = function(req, res, next) {
+   // Display Genre delete form on GET
+exports.genre_delete_get = function(req, res, next) {
     
         async.parallel({
             genre: function(callback) {
-                Genre.findById(req.params.id).exec(callback)
+                Genre.findById(req.params.id).exec(callback);
             },
-            genres_movies: function(callback) {
-              Movie.find({ 'genre': req.params.id }).exec(callback)
+            genre_movies: function(callback) {
+                Movie.find({ 'genre': req.params.id }).exec(callback);
             },
         }, function(err, results) {
             if (err) { return next(err); }
             //Successful, so render
-            res.render('genre_delete', { title: 'Delete genre', genre: results.genre, genre_movies: results.genres_movies } );
+            res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_movies: results.genre_movies } );
         });
     
     };
     
-    // Handle Author delete on POST
+    // Handle Genre delete on POST
     exports.genre_delete_post = function(req, res, next) {
     
-        req.checkBody('genreid', 'genre id must exist').notEmpty();
+        req.checkBody('id', 'Genre id must exist').notEmpty();
     
         async.parallel({
             genre: function(callback) {
-              Genre.findById(req.body.genreid).exec(callback)
+                Genre.findById(req.params.id).exec(callback);
             },
-            genres_movies: function(callback) {
-              Movie.find({ 'genre': req.body.genreid }).exec(callback)
+            genre_movies: function(callback) {
+                Movie.find({ 'genre': req.params.id }).exec(callback);
             },
         }, function(err, results) {
             if (err) { return next(err); }
             //Success
-            if (results.genres_movies.length > 0) {
-                //Author has books. Render in same way as for GET route.
-                res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_movies: results.genres_movies } );
+            if (results.genre_movies.length > 0) {
+                //Genre has books. Render in same way as for GET route.
+                res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_movies: results.genre_movies } );
                 return;
             }
             else {
-                //Author has no books. Delete object and redirect to the list of authors.
-                Genre.findByIdAndRemove(req.body.genreid, function deleteGenre(err) {
+                //Genre has no books. Delete object and redirect to the list of genres.
+                Genre.findByIdAndRemove(req.body.id, function deleteGenre(err) {
                     if (err) { return next(err); }
-                    //Success - got to author list
-                    res.redirect('/main/genre')
-                })
+                    //Success - got to genres list
+                    res.redirect('/main/genre');
+                });
     
             }
         });
     
     };
+    
     
     // Display Author update form on GET
     exports.genre_update_get = function(req, res, next) {
@@ -147,7 +148,8 @@ exports.genre_list = function(req, res, next) {
     
         //Create a author object with escaped and trimmed data (and the old id!)
         var genre = new Genre(
-            { name: req.body.name }
+            { name: req.body.name,
+            _id:req.params.id }
           );
     
         if (errors) {
