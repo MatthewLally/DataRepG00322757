@@ -1,7 +1,7 @@
 var Director = require('../models/director');
 var async = require('async');
 var Movie = require('../models/movie');
-// Display list of all Authors
+// Display list of all directors
 exports.director_list = function(req, res, next) {
     
       Director.find()
@@ -14,7 +14,7 @@ exports.director_list = function(req, res, next) {
     
     };
     
-    // Display detail page for a specific Author
+    // Display detail page for a specific director
     exports.director_detail = function(req, res, next) {
     
         async.parallel({
@@ -35,12 +35,12 @@ exports.director_list = function(req, res, next) {
     
     };
     
-    // Display Author create form on GET
+    // Display director create form on GET
     exports.director_create_get = function(req, res, next) {
         res.render('director_form', { title: 'Create Directors'});
     };
     
-    // Handle Author create on POST
+    // Handle director create on POST
     exports.director_create_post = function(req, res, next) {
     
         req.checkBody('first_name', 'First name must be specified.').notEmpty(); //We won't force Alphanumeric, because people might have spaces.
@@ -75,7 +75,7 @@ exports.director_list = function(req, res, next) {
     
             director.save(function (err) {
                 if (err) { return next(err); }
-                   //successful - redirect to new author record.
+                   //successful - redirect to new director record.
                    res.redirect(director.url);
                 });
     
@@ -83,7 +83,7 @@ exports.director_list = function(req, res, next) {
     
     };
     
-    // Display Author delete form on GET
+    // Display director delete form on GET
     exports.director_delete_get = function(req, res, next) {
     
         async.parallel({
@@ -101,7 +101,7 @@ exports.director_list = function(req, res, next) {
     
     };
     
-    // Handle Author delete on POST
+    // Handle director delete on POST
     exports.director_delete_post = function(req, res, next) {
     
         req.checkBody('directorid', 'Director id must exist').notEmpty();
@@ -117,15 +117,15 @@ exports.director_list = function(req, res, next) {
             if (err) { return next(err); }
             //Success
             if (results.directors_movies.length > 0) {
-                //Author has books. Render in same way as for GET route.
+                //director has directed a movie. Render in same way as for GET route.
                 res.render('director_delete', { title: 'Delete director', director: results.director, director_movies: results.directors_movies } );
                 return;
             }
             else {
-                //Author has no books. Delete object and redirect to the list of authors.
+                //director has not directed a movie. Delete object and redirect to the list of directors.
                 Director.findByIdAndRemove(req.body.directorid, function deleteDirector(err) {
                     if (err) { return next(err); }
-                    //Success - got to author list
+                    //Success - got to director list
                     res.redirect('/main/director')
                 })
     
@@ -134,7 +134,7 @@ exports.director_list = function(req, res, next) {
     
     };
     
-    // Display Author update form on GET
+    // Display director update form on GET
     exports.director_update_get = function(req, res, next) {
     
         req.sanitize('id').escape();
@@ -147,7 +147,7 @@ exports.director_list = function(req, res, next) {
         });
     };
     
-    // Handle Author update on POST
+    // Handle director update on POST
     exports.director_update_post = function(req, res, next) {
     
         req.sanitize('id').escape();
@@ -169,7 +169,7 @@ exports.director_list = function(req, res, next) {
         //Run the validators
         var errors = req.validationErrors();
     
-        //Create a author object with escaped and trimmed data (and the old id!)
+        //Create a director object with escaped and trimmed data (and the old id!)
         var director = new Director(
           {
           first_name: req.body.first_name,
@@ -190,7 +190,7 @@ exports.director_list = function(req, res, next) {
             // Data from form is valid. Update the record.
             Director.findByIdAndUpdate(req.params.id, director, {}, function (err,thedirector) {
                 if (err) { return next(err); }
-                   //successful - redirect to genre detail page.
+                   //successful - redirect to director detail page.
                    res.redirect(thedirector.url);
                 });
         }

@@ -26,7 +26,7 @@ exports.index = function(req, res) {
 };
 
 
-// Display list of all books
+// Display list of all movies
 exports.movie_list = function(req, res, next) {
 
   Movie.find({}, 'title star ')
@@ -39,7 +39,7 @@ exports.movie_list = function(req, res, next) {
 
 };
 
-// Display detail page for a specific book
+// Display detail page for a specific movie
 exports.movie_detail = function(req, res, next) {
     
         async.parallel({
@@ -53,14 +53,12 @@ exports.movie_detail = function(req, res, next) {
             director: function(callback) {
     
               Director.find({ 'first_name': req.params.id })
-              //.populate('book')
               .exec(callback);
             },
 
             star: function(callback) {
                 
                           Stars.find({ 'first_name': req.params.id })
-                          //.populate('book')
                           .exec(callback);
                         },
         }, function(err, results) {
@@ -72,10 +70,10 @@ exports.movie_detail = function(req, res, next) {
     };
     
 
-// Display book create form on GET
+// Display movie create form on GET
 exports.movie_create_get = function(req, res, next) {
 
-    //Get all authors and genres, which we can use for adding to our book.
+    //Get all movie info, which we can use for adding to our movie.
     async.parallel({
         directors: function(callback){
             Director.find(callback)
@@ -93,7 +91,7 @@ exports.movie_create_get = function(req, res, next) {
 
 };
 
-// Handle book create on POST
+// Handle movie create on POST
 exports.movie_create_post = function(req, res, next) {
 
     req.checkBody('title', 'Title must not be empty.').notEmpty();
@@ -127,11 +125,11 @@ exports.movie_create_post = function(req, res, next) {
 
     var errors = req.validationErrors();
     if (errors) {
-        // Some problems so we need to re-render our book
+        // Some problems so we need to re-render our movie
         console.log('GENRE: '+req.body.genre);
 
         console.log('ERRORS: '+errors);
-        //Get all authors and genres for form
+        //Get all movie info
         async.parallel({
             stars: function(callback) {
                 Stars.find(callback);
@@ -160,18 +158,17 @@ exports.movie_create_post = function(req, res, next) {
     }
     else {
     // Data from form is valid.
-    // We could check if book exists already, but lets just save.
 
         movie.save(function (err) {
             if (err) { return next(err); }
-               //successful - redirect to new book record.
+               //successful - redirect to new movie record.
                res.redirect(movie.url);
             });
     }
 
 };
 
-// Display book delete form on GET
+// Display movie delete form on GET
 exports.movie_delete_get = function(req, res, next) {
 
     async.parallel({
@@ -186,10 +183,10 @@ exports.movie_delete_get = function(req, res, next) {
 
 };
 
-// Handle book delete on POST
+// Handle movie delete on POST
 exports.movie_delete_post = function(req, res, next) {
 
-    //Assume the post will have id (ie no checking or sanitisation).
+    
 
     async.parallel({
         movie: function(callback) {
@@ -199,15 +196,15 @@ exports.movie_delete_post = function(req, res, next) {
         if (err) { return next(err); }
         //Success
         if (results.movie.length < 0) {
-            //Book has book_instances. Render in same way as for GET route.
+            //if there are no movies throw error
             res.render('movie_delete', { title: 'Delete Movie', movie: results.movie} );
             return;
         }
         else {
-            //Book has no bookinstances. Delete object and redirect to the list of books.
+            //movie can be deleted
             Movie.findByIdAndRemove(req.body.id, function deleteMovie(err) {
                 if (err) { return next(err); }
-                //Success - got to books list
+                //Success - got to movie list
                 res.redirect('/main/movie');
             });
 
@@ -216,13 +213,13 @@ exports.movie_delete_post = function(req, res, next) {
 
 };
 
-// Display book update form on GET
+// Display movie update form on GET
 exports.movie_update_get = function(req, res, next) {
 
     req.sanitize('id').escape();
     req.sanitize('id').trim();
 
-    //Get book, authors and genres for form
+    //Get movie info
     async.parallel({
         movie: function(callback) {
             Movie.findById(req.params.id).populate('director').populate('genre').populate('stars').exec(callback);
@@ -252,7 +249,7 @@ exports.movie_update_get = function(req, res, next) {
 
 };
 
-// Handle book update on POST
+// Handle movie update on POST
 exports.movie_update_post = function(req, res, next) {
 
     req.checkBody('title', 'Title must not be empty.').notEmpty();
@@ -285,8 +282,8 @@ exports.movie_update_post = function(req, res, next) {
 
     var errors = req.validationErrors();
     if (errors) {
-        // Re-render book with error information
-        // Get all authors and genres for form
+        // Re-render movie with error information
+        // Get all movie info
         async.parallel({
             directors: function(callback) {
                 Director.find(callback);
@@ -314,7 +311,7 @@ exports.movie_update_post = function(req, res, next) {
         // Data from form is valid. Update the record.
         Movie.findByIdAndUpdate(req.params.id, movie, {}, function (err,movie) {
             if (err) { return next(err); }
-               //successful - redirect to book detail page.
+               //successful - redirect to movie detail page.
                res.redirect(themovie.url);
             });
     }

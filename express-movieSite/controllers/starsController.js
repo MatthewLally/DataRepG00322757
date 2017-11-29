@@ -1,7 +1,7 @@
 var Stars = require('../models/stars');
 var async = require('async');
 var Movie = require('../models/movie');
-// Display list of all Authors
+// Display list of all stars
 exports.stars_list = function(req, res, next) {
     
       Stars.find()
@@ -14,7 +14,7 @@ exports.stars_list = function(req, res, next) {
     
     };
     
-    // Display detail page for a specific Author
+    // Display detail page for a specific star
     exports.stars_detail = function(req, res, next) {
     
         async.parallel({
@@ -35,12 +35,12 @@ exports.stars_list = function(req, res, next) {
     
     };
     
-    // Display Author create form on GET
+    // Display stars create form on GET
     exports.stars_create_get = function(req, res, next) {
         res.render('stars_form', { title: 'Create Stars'});
     };
     
-    // Handle Author create on POST
+    // Handle star create on POST
     exports.stars_create_post = function(req, res, next) {
     
         req.checkBody('first_name', 'First name must be specified.').notEmpty(); //We won't force Alphanumeric, because people might have spaces.
@@ -75,7 +75,7 @@ exports.stars_list = function(req, res, next) {
     
             star.save(function (err) {
                 if (err) { return next(err); }
-                   //successful - redirect to new author record.
+                   //successful - redirect to new stars record.
                    res.redirect(star.url);
                 });
     
@@ -83,7 +83,7 @@ exports.stars_list = function(req, res, next) {
     
     };
     
-    // Display Author delete form on GET
+    // Display stars delete form on GET
     exports.stars_delete_get = function(req, res, next) {
     
         async.parallel({
@@ -101,7 +101,7 @@ exports.stars_list = function(req, res, next) {
     
     };
     
-    // Handle Author delete on POST
+    // Handle star delete on POST
     exports.stars_delete_post = function(req, res, next) {
     
         req.checkBody('starid', 'Star id must exist').notEmpty();
@@ -117,15 +117,15 @@ exports.stars_list = function(req, res, next) {
             if (err) { return next(err); }
             //Success
             if (results.stars_movies.length > 0) {
-                //Author has books. Render in same way as for GET route.
+                //star has been in a movie so do not delete. Render in same way as for GET route.
                 res.render('stars_delete', { title: 'Delete Star', star: results.star, star_movies: results.stars_movies } );
                 return;
             }
             else {
-                //Author has no books. Delete object and redirect to the list of authors.
+                //star has not been in a movie. Delete object and redirect to the list of stars.
                 Stars.findByIdAndRemove(req.body.starid, function deleteStars(err) {
                     if (err) { return next(err); }
-                    //Success - got to author list
+                    //Success - got to star list
                     res.redirect('/main/stars')
                 })
     
@@ -134,7 +134,7 @@ exports.stars_list = function(req, res, next) {
     
     };
     
-    // Display Author update form on GET
+    // Display star update form on GET
     exports.stars_update_get = function(req, res, next) {
         
             req.sanitize('id').escape();
@@ -147,7 +147,7 @@ exports.stars_list = function(req, res, next) {
             });
         };
         
-        // Handle Author update on POST
+        // Handle star update on POST
         exports.stars_update_post = function(req, res, next) {
         
             req.sanitize('id').escape();
@@ -169,7 +169,7 @@ exports.stars_list = function(req, res, next) {
             //Run the validators
             var errors = req.validationErrors();
         
-            //Create a author object with escaped and trimmed data (and the old id!)
+            //Create a star object with escaped and trimmed data (and the old id!)
             var star = new Stars(
               {
               first_name: req.body.first_name,
@@ -190,7 +190,7 @@ exports.stars_list = function(req, res, next) {
                 // Data from form is valid. Update the record.
                 Stars.findByIdAndUpdate(req.params.id, star, {}, function (err,thestar) {
                     if (err) { return next(err); }
-                       //successful - redirect to genre detail page.
+                       //successful - redirect to stars detail page.
                        res.redirect(thestar.url);
                     });
             }

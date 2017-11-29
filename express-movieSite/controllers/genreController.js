@@ -15,7 +15,7 @@ exports.genre_list = function(req, res, next) {
     });
 
 };
-    // Display detail page for a specific Author
+    // Display detail page for a specific genre
     exports.genre_detail = function(req, res, next) {
     
         async.parallel({
@@ -36,15 +36,15 @@ exports.genre_list = function(req, res, next) {
     
     };
     
-    // Display Author create form on GET
+    // Display genre create form on GET
     exports.genre_create_get = function(req, res, next) {
         res.render('genre_form', { title: 'Create Genre'});
     };
     
-    // Handle Author create on POST
+    // Handle genre create on POST
     exports.genre_create_post = function(req, res, next) {
     
-        req.checkBody('name', 'name must be specified.').notEmpty(); //We won't force Alphanumeric, because people might have spaces.
+        req.checkBody('name', 'name must be specified.').notEmpty(); 
 
         var errors = req.validationErrors();
 
@@ -60,7 +60,7 @@ exports.genre_list = function(req, res, next) {
     
             genre.save(function (err) {
                 if (err) { return next(err); }
-                   //successful - redirect to new author record.
+                   //successful - redirect to new genre record.
                    res.redirect(genre.url);
                 });
     
@@ -102,12 +102,12 @@ exports.genre_delete_get = function(req, res, next) {
             if (err) { return next(err); }
             //Success
             if (results.genre_movies.length > 0) {
-                //Genre has books. Render in same way as for GET route.
+                //Genre is in a movie. Render in same way as for GET route.
                 res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_movies: results.genre_movies } );
                 return;
             }
             else {
-                //Genre has no books. Delete object and redirect to the list of genres.
+                //Genre is not in a movie. Delete object and redirect to the list of genres.
                 Genre.findByIdAndRemove(req.body.id, function deleteGenre(err) {
                     if (err) { return next(err); }
                     //Success - got to genres list
@@ -120,7 +120,7 @@ exports.genre_delete_get = function(req, res, next) {
     };
     
     
-    // Display Author update form on GET
+    // Display genre update form on GET
     exports.genre_update_get = function(req, res, next) {
     
         req.sanitize('id').escape();
@@ -133,7 +133,7 @@ exports.genre_delete_get = function(req, res, next) {
         });
     };
     
-    // Handle Author update on POST
+    // Handle genre update on POST
     exports.genre_update_post = function(req, res, next) {
     
         req.sanitize('id').escape();
@@ -146,7 +146,7 @@ exports.genre_delete_get = function(req, res, next) {
         //Run the validators
         var errors = req.validationErrors();
     
-        //Create a author object with escaped and trimmed data (and the old id!)
+        //Create a genre object with escaped and trimmed data (and the old id!)
         var genre = new Genre(
             { name: req.body.name,
             _id:req.params.id }
