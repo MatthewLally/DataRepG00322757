@@ -11,30 +11,24 @@ html(lang='en')
   body
     div(class='container-fluid')
       div(class='row')
-        div(class='col-sm-2')
-          block sidebar
-            ul(class='sidebar-nav')
-              li 
-                a(href='/main') Home
-              li 
-                a(href='/main/movie') All Movies
-              li 
-                a(href='/main/stars') All Movie Stars
-              li 
-                a(href='/main/genre') All Genres
-              li 
-                a(href='/main/director') All Directors
-              li 
-                hr
-              li 
-                a(href='/main/movie/create') Create new movie
-              li 
-                a(href='/main/genre/create') Create new genre
-              li 
-                a(href='/main/stars/create') Create new movie stars
-              li 
-                a(href='/main/director/create') Create new director
-                
-        div(class='col-sm-10')
+
+          nav.navbar.navbar-default
+            .container-fluid
+              .navbar-header
+                a.navbar-brand(href='/main') Movies Database
+              |     
+              ul.nav.navbar-nav
+                li.active
+                  a(href='/main/movie') All Movies
+                |       
+                li
+                  a(href='/main/stars') All Movie Stars
+                |       
+                li
+                  a(href='/main/genre') All Genres
+                |       
+                li
+                  a(href='/main/director') All Directors
+
           block content
 
