@@ -136,64 +136,64 @@ exports.stars_list = function(req, res, next) {
     
     // Display Author update form on GET
     exports.stars_update_get = function(req, res, next) {
-    
-        req.sanitize('id').escape();
-        req.sanitize('id').trim();
-        Stars.findById(req.params.id, function(err, star) {
-            if (err) { return next(err); }
-            //On success
-            res.render('stars_form', { title: 'Update Stars', star: star });
-    
-        });
-    };
-    
-    // Handle Author update on POST
-    exports.stars_update_post = function(req, res, next) {
-    
-        req.sanitize('id').escape();
-        req.sanitize('id').trim();
-    
-        req.checkBody('first_name', 'First name must be specified.').notEmpty(); //We won't force Alphanumeric, because people might have spaces.
-        req.checkBody('second_name', 'Family name must be specified.').notEmpty();
-        req.checkBody('date_of_birth', 'Invalid date').notEmpty();
-        req.checkBody('date_of_death', 'Invalid date').optional();
-        req.checkBody('nationality', 'nationality name must be specified.').notEmpty();
-    
-        req.sanitize('first_name').escape();
-        req.sanitize('second_name').escape();
-        req.sanitize('first_name').trim();
-        req.sanitize('second_name').trim();
-        req.sanitize('date_of_birth').toDate();
-        req.sanitize('date_of_death').toDate();
-    
-        //Run the validators
-        var errors = req.validationErrors();
-    
-        //Create a author object with escaped and trimmed data (and the old id!)
-        var star = new Stars(
-          {
-          first_name: req.body.first_name,
-          second_name: req.body.second_name,
-          date_of_birth: req.body.date_of_birth,
-          date_of_death: req.body.date_of_death,
-          nationality: req.body.nationality,
-          _id: req.params.id
-          }
-        );
-    
-        if (errors) {
-            //If there are errors render the form again, passing the previously entered values and errors
-            res.render('stars_form', { title: 'Update Stars', star: star, errors: errors});
-        return;
-        }
-        else {
-            // Data from form is valid. Update the record.
-            Stars.findByIdAndUpdate(req.params.id, star, {}, function (err,thestar) {
+        
+            req.sanitize('id').escape();
+            req.sanitize('id').trim();
+            Stars.findById(req.params.id, function(err, star) {
                 if (err) { return next(err); }
-                   //successful - redirect to genre detail page.
-                   res.redirect(thestar.url);
-                });
-        }
-    
-    
-    };
+                //On success
+                res.render('stars_form', { title: 'Update Star', star: star });
+        
+            });
+        };
+        
+        // Handle Author update on POST
+        exports.stars_update_post = function(req, res, next) {
+        
+            req.sanitize('id').escape();
+            req.sanitize('id').trim();
+        
+            req.checkBody('first_name', 'First name must be specified.').notEmpty(); //We won't force Alphanumeric, because people might have spaces.
+            req.checkBody('second_name', 'Family name must be specified.').notEmpty();
+            req.checkBody('date_of_birth', 'Invalid date').notEmpty();
+            req.checkBody('date_of_death', 'Invalid date').optional();
+            req.checkBody('nationality', 'nationality name must be specified.').notEmpty();
+        
+            req.sanitize('first_name').escape();
+            req.sanitize('second_name').escape();
+            req.sanitize('first_name').trim();
+            req.sanitize('second_name').trim();
+            req.sanitize('date_of_birth').toDate();
+            req.sanitize('date_of_death').toDate();
+        
+            //Run the validators
+            var errors = req.validationErrors();
+        
+            //Create a author object with escaped and trimmed data (and the old id!)
+            var star = new Stars(
+              {
+              first_name: req.body.first_name,
+              second_name: req.body.second_name,
+              date_of_birth: req.body.date_of_birth,
+              date_of_death: req.body.date_of_death,
+              nationality: req.body.nationality,
+              _id: req.params.id
+              }
+            );
+        
+            if (errors) {
+                //If there are errors render the form again, passing the previously entered values and errors
+                res.render('stars_form', { title: 'Update Stars', star: star, errors: errors});
+            return;
+            }
+            else {
+                // Data from form is valid. Update the record.
+                Stars.findByIdAndUpdate(req.params.id, star, {}, function (err,thestar) {
+                    if (err) { return next(err); }
+                       //successful - redirect to genre detail page.
+                       res.redirect(thestar.url);
+                    });
+            }
+        
+        
+        };
