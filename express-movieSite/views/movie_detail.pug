@@ -3,9 +3,12 @@ extends layout
 block content
 
   h1 Movie: #{movie.title}
+  p #[strong Release Date:] #{movie.release_date}
+  p #[strong Description:] #{movie.description}
   
   div(style='margin-left:20px;margin-top:20px')
-  p #[strong Description:] #{movie.description}
-  p #{movie.release_date}
+
+      
+  hr
   p
     a(href=movie.url+'/delete') Delete Movie
