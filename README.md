@@ -21,7 +21,7 @@ Before creating the website , I had to sit down and think what information would
 
 ## MongoDB
 
-I decided to use mongodb as it is widely used and as taken from mongodb.com : Using MongoDB removes the complex object-relational mapping (ORM) layer that translates objects in code to relational tables. MongoDB's flexible data model also means that your database schema can evolve with business requirements.
+I decided to use mongodb as it is widely used and as taken from mongodb.com : Using MongoDB removes the complex object-relational mapping (ORM) layer that translates objects in code to relational tables. MongoDB's flexible data model also means that your database schema can evolve with business requirements. The user of this website does not need to have mongodb installed locally as I have the database hosted on mLab.
 
 ## Express
 Express 3.x is a light-weight web application framework to help organize your web application into an MVC architecture on the server side. You can use a variety of choices for your templating language (like EJS, Jade, Pug, and Dust.js).
