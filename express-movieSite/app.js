@@ -14,7 +14,7 @@ var main = require('./routes/main');  //Import routes for "main" area of site
 var app = express();
 
 //Set up mongoose connection
-var mongoDB = 'mongodb://matthew:matthew@ds121716.mlab.com:21716/movie_database';
+var mongoDB = process.env.MONGODB_URI || 'mongodb://matthew:matthew@ds121716.mlab.com:21716/movie_database';
 mongoose.connect(mongoDB, {
   useMongoClient: true
 });
